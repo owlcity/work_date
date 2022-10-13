@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>每月考勤</title>
+    <!-- https://unpkg.com/browse/iview@3.4.2/ -->
+    <link rel="stylesheet" type="text/css" href="./iview@3.4.2/iview.css" />
+    <script src="./iview@3.4.2/vue.js"></script>
+    <script type="text/javascript" src="./iview@3.4.2/iview.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  </head>
+  <style>
+    .h2 {
+      width: 600px;
+      margin: 20px;
+      text-align: center;
+    }
+    .container {
+      width: 600px;
+    }
+    .ivu-table {
+      text-align: center;
+      width: 100%;
+    }
+    .ivu-table table {
+      width: 100%;
+    }
+    .ivu-table th,
+    .ivu-table td {
+      width: 25%;
+      height: 38px;
+      text-align: center;
+      border-bottom: 1px solid #555;
+    }
+    .ivu-table tr:hover td {
+      background-color: #f0faff;
+    }
+    .ivu-table-border td,
+    .ivu-table-border th {
+      border-right: 1px solid #555;
+    }
+    .bg-blue {
+      background-color: #8dbdd3 !important;
+    }
+    .ivu-table-wrapper {
+      border-top: 1px solid #555;
+    }
+    .ivu-table:after,
+    .ivu-table:before {
+      background-color: #555;
+    }
+    .btn-wrap {
+      padding: 30px 30px 100px;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <h2 class="h2">{{month}}月考勤</h2>
+      <div id="container" class="container">
+        <!-- <i-table border :columns="columns1" :data="data1"></i-table> -->
+        <div class="ivu-table-wrapper">
+          <div class="ivu-table ivu-table-default ivu-table-border">
+            <div class="ivu-table-header">
+              <table cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <th>日期</th>
+                  <th>上午</th>
+                  <th>下午</th>
+                  <th>加班</th>
+                </tr>
+              </table>
+            </div>
+            <div class="ivu-table-body">
+              <table cellspacing="0" cellpadding="0" border="0">
+                <tr v-for="(item, index) in list" :key="item.date">
+                  <template v-if="item.type == 0">
+                    <td>{{index+1}}</td>
+                    <td>4</td>
+                    <td>4</td>
+                    <td @click="overtime(index)">
+                      <span v-if="item.overtime"> {{item.overtime}} </span>
+                      <span v-else></span>
+                    </td>
+                  </template>
+                  <template v-else>
+                    <td class="bg-blue">{{index+1}}</td>
+                    <td class="bg-blue"></td>
+                    <td class="bg-blue"></td>
+                    <td class="bg-blue" @click="overtime(index)">
+                      <span v-if="item.overtime"> {{item.overtime}} </span>
+                      <span v-else></span>
+                    </td>
+                  </template>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <i-input v-model="name" size="large" placeholder="请输入姓名" style="width: 160px"></i-input>
+
+        <i-button @click="handleCapture" size="large" type="primary">Download</i-button>
+      </div>
+    </div>
+    <script src="10.js"></script>
+    <script src="11.js"></script>
+    <script src="12.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            value: "",
+            index: "",
+            list: arr_10,
+            name: "",
+            month: new Date().getMonth() + 1,
+          };
+        },
+        created() {
+          if (this.month == 10) {
+            this.list = arr_10;
+          } else if (this.month == 11) {
+            this.list = arr_11;
+          } else if (this.month == 12) {
+            this.list = arr_12;
+          } else {
+            this.$Modal.info({
+              title: "提示",
+              content: "2023年的休假暂无数据,请等待更新",
+            });
+          }
+          // console.log(this.list);
+          // console.log(arr_11);
+          // console.log(arr_12);
+        },
+        methods: {
+          overtime(index) {
+            let _this = this;
+            this.index = index;
+            this.value = "";
+            this.$Modal.confirm({
+              render: (h) => {
+                return h("Input", {
+                  props: {
+                    value: this.value,
+                    type: "number",
+                    autofocus: true,
+                    placeholder: "请输入加班时间",
+                  },
+                  on: {
+                    input: (val) => {
+                      this.value = val;
+                    },
+                  },
+                });
+              },
+              onOk() {
+                
+                //  https://blog.csdn.net/bigbear00007/article/details/102594645
+                // 由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+                // 当利用索引直接设置一个项时，例如：this.items[index] = value;
+                // 当修改数组的长度时，例如：vm.items.length = newLength。
+                // 方法一
+                // _this.list[index].overtime = _this.value;
+                // _this.$forceUpdate();
+                // 方法二
+                // _this.$set(_this.list[index], 'overtime', _this.value)
+
+                // 方法二
+                const data = [..._this.list]
+                data[index].overtime = _this.value;
+                _this.list = data
+                // ----结束----
+                _this.index = "";
+                _this.value = "";
+              },
+            });
+          },
+          handleCapture() {
+            html2canvas(document.querySelector("#container")).then((canvas) => {
+              // document.body.appendChild(canvas);
+              let img = document.createElement("a");
+              img.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+              img.download = `${this.name}${this.month}月考勤.jpg`;
+              // img.download = "name + 月份.jpg";
+              img.click();
+            });
+          },
+        },
+        mounted() {
+          console.log("当前月" + this.month);
+        },
+      });
+    </script>
+  </body>
+</html>
