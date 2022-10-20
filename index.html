@@ -117,6 +117,7 @@
 
         <i-button @click="handleCapture" size="large" type="primary">Download</i-button>
       </div>
+      <a href="" id="down-load"></a>
     </div>
     <script src="9.js"></script>
     <script src="10.js"></script>
@@ -209,13 +210,28 @@
             });
           },
           handleCapture() {
+            let _this = this;
             html2canvas(document.querySelector("#container")).then((canvas) => {
               // document.body.appendChild(canvas);
-              let img = document.createElement("a");
-              img.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-              img.download = `${this.name}${this.month}月考勤.jpg`;
-              // img.download = "name + 月份.jpg";
-              img.click();
+              // QQ浏览器和UC浏览器兼容性问题
+              // let img = document.createElement("a");
+              // img.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+              // img.download = `${this.name}${this.month}月考勤.jpg`;
+              // // img.download = "name + 月份.jpg";
+              // img.click();
+              canvas.toBlob(
+                function (blob) {
+                  const eleLink = document.querySelector("#down-load");
+                  eleLink.download = `${_this.name}${_this.month}月考勤.png`;
+                  eleLink.style.display = "none";
+                  // 字符内容转变成blob地址
+                  eleLink.href = URL.createObjectURL(blob);
+                  // 触发点击
+                  eleLink.click();
+                },
+                "image/png",
+                1,
+              );
             });
           },
         },
