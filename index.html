@@ -62,6 +62,10 @@
       justify-content: center;
       padding: 30px 30px 100px;
     }
+    .ivu-modal {
+      top: 50%;
+      margin-top: -60px;
+    }
   </style>
   <body>
     <div id="app">
@@ -211,6 +215,10 @@
           },
           handleCapture() {
             let _this = this;
+            this.$Message.info({
+              content: "已添加下载",
+              duration: 5,
+            });
             html2canvas(document.querySelector("#container")).then((canvas) => {
               // document.body.appendChild(canvas);
               // QQ浏览器和UC浏览器兼容性问题
