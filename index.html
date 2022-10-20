@@ -88,7 +88,7 @@
               <table cellspacing="0" cellpadding="0" border="0">
                 <tr v-for="(item, index) in list" :key="item.date">
                   <template v-if="item.type == 0">
-                    <td>{{item.date}}</td>
+                    <td>{{index+1}}</td>
                     <td>4</td>
                     <td>4</td>
                     <td @click="overtime(index)">
@@ -97,7 +97,7 @@
                     </td>
                   </template>
                   <template v-else>
-                    <td class="bg-blue">{{item.date}}</td>
+                    <td class="bg-blue">{{index+1}}</td>
                     <td class="bg-blue"></td>
                     <td class="bg-blue"></td>
                     <td class="bg-blue" @click="overtime(index)">
@@ -141,17 +141,20 @@
           };
         },
         created() {
-          let start_arr = [];
-          let end_arr = [];
+          // let start_arr = [];
+          // let end_arr = [];
           if (this.month == 10) {
-            start_arr = arr_9;
-            end_arr = arr_10;
+            // start_arr = arr_9;
+            // end_arr = arr_10;
+            this.list = arr_10;
           } else if (this.month == 11) {
-            start_arr = arr_10;
-            end_arr = arr_11;
+            // start_arr = arr_10;
+            // end_arr = arr_11;
+            this.list = arr_11;
           } else if (this.month == 12) {
-            start_arr = arr_11;
-            end_arr = arr_12;
+            // start_arr = arr_11;
+            // end_arr = arr_12;
+            this.list = arr_12;
           } else {
             this.$Modal.info({
               title: "提示",
@@ -159,14 +162,14 @@
             });
           }
           // console.log("start", start_arr.slice(20));
-          let start = start_arr.slice(20);
-          let end = end_arr.slice(0, 20);
+          // let start = start_arr.slice(20);
+          // let end = end_arr.slice(0, 20);
           // console.log(start);
           // console.log(end);
-          let arr = start.concat(end);
+          // let arr = start.concat(end);
           // console.log(arr);
           // console.log(`${this.year}-${this.month}-21`);
-          this.list = arr;
+          // this.list = arr;
           // console.log(this.list);
           // console.log(arr_11);
           // console.log(arr_12);
