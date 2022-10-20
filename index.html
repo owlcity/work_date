@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <title>每月考勤</title>
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"
+    />
     <!-- https://unpkg.com/browse/iview@3.4.2/ -->
     <link rel="stylesheet" type="text/css" href="./iview@3.4.2/iview.css" />
     <script src="./iview@3.4.2/vue.js"></script>
@@ -11,12 +15,14 @@
   </head>
   <style>
     .h2 {
-      width: 600px;
+      width: 100%;
       margin: 20px;
       text-align: center;
     }
     .container {
-      width: 600px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
     }
     .ivu-table {
       text-align: center;
@@ -43,6 +49,7 @@
       background-color: #8dbdd3 !important;
     }
     .ivu-table-wrapper {
+      border-left: 1px solid #555;
       border-top: 1px solid #555;
     }
     .ivu-table:after,
@@ -50,6 +57,9 @@
       background-color: #555;
     }
     .btn-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 30px 30px 100px;
     }
   </style>
@@ -98,7 +108,12 @@
         </div>
       </div>
       <div class="btn-wrap">
-        <i-input v-model="name" size="large" placeholder="请输入姓名" style="width: 160px"></i-input>
+        <i-input
+          v-model="name"
+          size="large"
+          placeholder="请输入姓名"
+          style="width: 160px; margin-right: 10px"
+        ></i-input>
 
         <i-button @click="handleCapture" size="large" type="primary">Download</i-button>
       </div>
