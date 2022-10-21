@@ -49,12 +49,13 @@
       background-color: #8dbdd3 !important;
     }
     .bg-yellow {
-      background-color: #bcd99c !important;
+      background-color: #c5daae !important;
     }
 
     .ivu-table-wrapper {
       border-left: 1px solid #555;
       border-top: 1px solid #555;
+      overflow: visible;
     }
     .ivu-table:after,
     .ivu-table:before {
@@ -86,7 +87,7 @@
       position: absolute;
       height: 1px;
       width: 100%;
-      background-color: #ccc;
+      background-color: #f5eded;
       left: 0;
       bottom: -8px;
     }
@@ -119,28 +120,32 @@
                     <td>{{index+1}}</td>
                     <td>
                       <Dropdown trigger="click">
-                        <div class="down-title" v-if="item.gm">{{item.gm}}</div>
-                        <div class="down-title" v-else>4</div>
+                        <div class="down-title">{{item.gm}}</div>
                         <dropdown-menu slot="list">
                           <dropdown-item>
-                            <div class="down-item down-item-bottom" @click="changeItem('gm', '4', index)">4</div>
+                            <div class="down-item down-item-bottom" @click="changeItem('gm', index, '4')">4</div>
                           </dropdown-item>
                           <dropdown-item>
-                            <div class="down-item" @click="changeItem('gm','请假', index)">请假</div>
+                            <div class="down-item down-item-bottom" @click="changeItem('gm', index, '年假')">年假</div>
+                          </dropdown-item>
+                          <dropdown-item>
+                            <div class="down-item" @click="changeItem('gm', index, '事假')">事假</div>
                           </dropdown-item>
                         </dropdown-menu>
                       </Dropdown>
                     </td>
                     <td>
                       <Dropdown trigger="click">
-                        <div class="down-title" v-if="item.pm">{{item.pm}}</div>
-                        <div class="down-title" v-else>4</div>
+                        <div class="down-title">{{item.pm}}</div>
                         <dropdown-menu slot="list">
                           <dropdown-item>
-                            <div class="down-item down-item-bottom" @click="changeItem('pm', '4', index)">4</div>
+                            <div class="down-item down-item-bottom" @click="changeItem('pm', index, '4')">4</div>
                           </dropdown-item>
                           <dropdown-item>
-                            <div class="down-item" @click="changeItem('pm','请假', index)">请假</div>
+                            <div class="down-item down-item-bottom" @click="changeItem('pm', index, '年假')">年假</div>
+                          </dropdown-item>
+                          <dropdown-item>
+                            <div class="down-item" @click="changeItem('pm', index, '事假')">事假</div>
                           </dropdown-item>
                         </dropdown-menu>
                       </Dropdown>
@@ -206,6 +211,16 @@
         created() {
           // let start_arr = [];
           // let end_arr = [];
+          console.log(this.list);
+          this.list.map((item) => {
+            if (item.type === 0) {
+              item.gm = 4;
+              item.pm = 4;
+            } else {
+              item.gm = 0;
+              item.pm = 0;
+            }
+          });
           if (this.month == 10) {
             // start_arr = arr_9;
             // end_arr = arr_10;
@@ -279,11 +294,11 @@
               },
             });
           },
-          changeItem(type, data, index) {
-            if (type == "gm") {
+          changeItem(type, index, data) {
+            if (type === "gm") {
               this.list[index].gm = data;
             }
-            if (type == "pm") {
+            if (type === "pm") {
               this.list[index].pm = data;
             }
             this.$forceUpdate();
