@@ -211,16 +211,8 @@
         created() {
           // let start_arr = [];
           // let end_arr = [];
-          console.log(this.list);
-          this.list.map((item) => {
-            if (item.type === 0) {
-              item.gm = 4;
-              item.pm = 4;
-            } else {
-              item.gm = 0;
-              item.pm = 0;
-            }
-          });
+
+          // console.log(this.list);
           if (this.month == 10) {
             // start_arr = arr_9;
             // end_arr = arr_10;
@@ -239,6 +231,16 @@
               content: "2023年的休假暂无数据,请等待更新",
             });
           }
+          this.list.map((item) => {
+            if (item.type === 0) {
+              item.gm = 4;
+              item.pm = 4;
+            } else {
+              item.gm = 0;
+              item.pm = 0;
+            }
+          });
+          // console.log(this.list);
           // console.log("start", start_arr.slice(20));
           // let start = start_arr.slice(20);
           // let end = end_arr.slice(0, 20);
@@ -335,7 +337,7 @@
           },
         },
         mounted() {
-          console.log("当前月" + this.month);
+          // console.log("当前月" + this.month);
         },
       });
     </script>
