@@ -98,7 +98,7 @@
   </style>
   <body>
     <div id="app">
-      <h2 class="h2">{{year}}年{{month}}月考勤</h2>
+      <h2 class="h2">{{month}}月考勤</h2>
       <div id="container" class="container">
         <!-- <i-table border :columns="columns1" :data="data1"></i-table> -->
         <div class="ivu-table-wrapper">
@@ -116,7 +116,7 @@
             <div class="ivu-table-body">
               <table cellspacing="0" cellpadding="0" border="0">
                 <tr v-for="(item, index) in list" :key="item.date">
-                  <template v-if="item.isWork === '1'">
+                  <template v-if="item.type == 0">
                     <td>{{index+1}}</td>
                     <td>
                       <Dropdown trigger="click">
@@ -161,7 +161,7 @@
                       <span v-else></span>
                     </td>
                   </template>
-                  <template v-if="item.isWork=== '0' && !item.intro">
+                  <template v-else-if="item.type==1">
                     <td class="bg-blue">{{index+1}}</td>
                     <td class="bg-blue"></td>
                     <td class="bg-blue"></td>
@@ -170,7 +170,7 @@
                       <span v-else></span>
                     </td>
                   </template>
-                  <template v-if="item.isWork=== '0' && item.intro">
+                  <template v-else>
                     <td class="bg-yellow">{{index+1}}</td>
                     <td class="bg-yellow"></td>
                     <td class="bg-yellow"></td>
@@ -197,7 +197,10 @@
       </div>
       <a href="" id="down-load"></a>
     </div>
-    <script src="2023.js"></script>
+    <script src="9.js"></script>
+    <script src="10.js"></script>
+    <script src="11.js"></script>
+    <script src="12.js"></script>
     <script>
       var app = new Vue({
         el: "#app",
@@ -205,7 +208,7 @@
           return {
             value: "",
             index: "",
-            list: yearJson,
+            list: arr_10,
             name: "",
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
@@ -216,19 +219,26 @@
           // let end_arr = [];
 
           // console.log(this.list);
-          // console.log("yearJson", yearJson);
-          // return;
-
-          // console.log(this.list);
-          // console.log(this.month);
-          // this.month = 1;
-          let currentMonth = this.list.filter((item) => {
-            return parseInt(item.month) === this.month;
-          });
-          // console.log(currentMonth);
-          this.list = currentMonth;
+          if (this.month == 10) {
+            // start_arr = arr_9;
+            // end_arr = arr_10;
+            this.list = arr_10;
+          } else if (this.month == 11) {
+            // start_arr = arr_10;
+            // end_arr = arr_11;
+            this.list = arr_11;
+          } else if (this.month == 12) {
+            // start_arr = arr_11;
+            // end_arr = arr_12;
+            this.list = arr_12;
+          } else {
+            this.$Modal.info({
+              title: "提示",
+              content: "2023年的休假暂无数据,请等待更新",
+            });
+          }
           this.list.map((item) => {
-            if (item.isWork === "1") {
+            if (item.type === 0) {
               item.gm = 4;
               item.pm = 4;
             } else {
@@ -236,7 +246,7 @@
               item.pm = 0;
             }
           });
-          console.log(this.list);
+          // console.log(this.list);
           // console.log("start", start_arr.slice(20));
           // let start = start_arr.slice(20);
           // let end = end_arr.slice(0, 20);
