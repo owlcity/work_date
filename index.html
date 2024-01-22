@@ -16,7 +16,7 @@
   <style>
     .h2 {
       width: 100%;
-      margin: 20px 0;
+      padding: 20px 0;
       text-align: center;
     }
     .container {
@@ -98,8 +98,8 @@
   </style>
   <body>
     <div id="app">
-      <h2 class="h2">{{year}}年{{month}}月考勤</h2>
       <div id="container" class="container">
+        <h2 class="h2">{{name}} {{year}}年{{month}}月考勤</h2>
         <!-- <i-table border :columns="columns1" :data="data1"></i-table> -->
         <div class="ivu-table-wrapper">
           <div class="ivu-table ivu-table-default ivu-table-border">
@@ -132,10 +132,13 @@
                             <div class="down-item" @click="changeItem('gm', index, '事假')">事假</div>
                           </dropdown-item>
                           <dropdown-item>
-                            <div class="down-item" @click="changeItem('pm', index, '婚假')">婚假</div>
+                            <div class="down-item" @click="changeItem('gm', index, '婚假')">婚假</div>
                           </dropdown-item>
                           <dropdown-item>
-                            <div class="down-item" @click="changeItem('pm', index, '陪产假')">陪产假</div>
+                            <div class="down-item" @click="changeItem('gm', index, '陪产假')">陪产假</div>
+                          </dropdown-item>
+                          <dropdown-item>
+                            <div class="down-item" @click="changeItem('gm', index, '育儿假')">育儿假</div>
                           </dropdown-item>
                           <!-- <dropdown-item>
                             <div class="down-item" @click="changeItem('gm', index, '阳性居家')">阳性居家</div>
@@ -161,6 +164,9 @@
                           </dropdown-item>
                           <dropdown-item>
                             <div class="down-item" @click="changeItem('pm', index, '陪产假')">陪产假</div>
+                          </dropdown-item>
+                          <dropdown-item>
+                            <div class="down-item" @click="changeItem('pm', index, '育儿假')">育儿假</div>
                           </dropdown-item>
                           <!-- <dropdown-item>
                             <div class="down-item" @click="changeItem('pm', index, '阳性居家')">阳性居家</div>
