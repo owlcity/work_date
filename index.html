@@ -46,10 +46,10 @@
       border-right: 1px solid #555;
     }
     .bg-blue {
-      background-color: #8dbdd3 !important;
+      background-color: #bfe2f7 !important;
     }
     .bg-yellow {
-      background-color: #c5daae !important;
+      background-color: #d5eaae !important;
     }
 
     .ivu-table-wrapper {
@@ -243,6 +243,7 @@
 
           // console.log(this.list);
           // console.log(this.month);
+          // console.log(this.prevMonth);
           // this.month = 1;
           let prevMonth = this.list.filter((item) => {
             return parseInt(item.month) === this.prevMonth;
@@ -253,8 +254,8 @@
           
           let prevMonthDay = prevMonth.slice(25)
           let currentMonthDay = currentMonth.slice(0, 25)
-          console.log('prevMonthDay', prevMonthDay);
-          console.log('currentMonthDay', currentMonthDay);
+          // console.log('prevMonthDay', prevMonthDay);
+          // console.log('currentMonthDay', currentMonthDay);
           this.list = [...prevMonthDay, ...currentMonthDay];
           
           this.list.map((item) => {
