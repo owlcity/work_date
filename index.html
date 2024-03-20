@@ -117,7 +117,10 @@
               <table cellspacing="0" cellpadding="0" border="0">
                 <tr v-for="(item, index) in list" :key="item.date">
                   <template v-if="item.isWork === '1'">
-                    <td>{{index+1}}</td>
+                    <td>
+                      {{item.date}}
+                      <!-- {{item.date}} -->
+                    </td>
                     <td>
                       <Dropdown trigger="click">
                         <div class="down-title">{{item.gm}}</div>
@@ -180,18 +183,18 @@
                     </td>
                   </template>
                   <template v-if="item.isWork=== '0' && !item.intro">
-                    <td class="bg-blue">{{index+1}}</td>
-                    <td class="bg-blue"></td>
-                    <td class="bg-blue"></td>
+                    <td class="bg-blue">{{item.date}}</td>
+                    <td class="bg-blue">{{item.week}}</td>
+                    <td class="bg-blue">{{item.week}}</td>
                     <td class="bg-blue" @click="overtime(index)">
                       <span v-if="item.overtime"> {{item.overtime}} </span>
                       <span v-else></span>
                     </td>
                   </template>
                   <template v-if="item.isWork=== '0' && item.intro">
-                    <td class="bg-yellow">{{index+1}}</td>
-                    <td class="bg-yellow"></td>
-                    <td class="bg-yellow"></td>
+                    <td class="bg-yellow">{{item.date}}</td>
+                    <td class="bg-yellow">{{item.intro}}</td>
+                    <td class="bg-yellow"{{item.intro}}></td>
                     <td class="bg-yellow" @click="overtime(index)">
                       <span v-if="item.overtime"> {{item.overtime}} </span>
                       <span v-else></span>
@@ -211,7 +214,7 @@
           style="width: 160px; margin-right: 10px"
         ></i-input>
 
-        <i-button @click="handleCapture" size="large" type="primary">Download</i-button>
+        <i-button @click="handleCapture" size="large" type="primary">下载考勤</i-button>
       </div>
       <a href="" id="down-load"></a>
     </div>
@@ -227,6 +230,7 @@
             name: "",
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
+            prevMonth: new Date().getMonth(),
           };
         },
         created() {
@@ -240,11 +244,19 @@
           // console.log(this.list);
           // console.log(this.month);
           // this.month = 1;
+          let prevMonth = this.list.filter((item) => {
+            return parseInt(item.month) === this.prevMonth;
+          });
           let currentMonth = this.list.filter((item) => {
             return parseInt(item.month) === this.month;
           });
-          // console.log(currentMonth);
-          this.list = currentMonth;
+          
+          let prevMonthDay = prevMonth.slice(25)
+          let currentMonthDay = currentMonth.slice(0, 25)
+          console.log('prevMonthDay', prevMonthDay);
+          console.log('currentMonthDay', currentMonthDay);
+          this.list = [...prevMonthDay, ...currentMonthDay];
+          
           this.list.map((item) => {
             if (item.isWork === "1") {
               item.gm = 4;
@@ -254,7 +266,7 @@
               item.pm = 0;
             }
           });
-          // console.log(this.list);
+          console.log('list', this.list);
           // console.log("start", start_arr.slice(20));
           // let start = start_arr.slice(20);
           // let end = end_arr.slice(0, 20);
