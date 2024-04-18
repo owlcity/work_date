@@ -182,7 +182,7 @@
                       <span v-else></span>
                     </td>
                   </template>
-                  <template v-if="item.isWork=== '0' && !item.intro">
+                  <template v-else-if="item.isWork=== '0' && !item.intro">
                     <td class="bg-blue">{{item.date}}</td>
                     <td class="bg-blue">{{item.week}}</td>
                     <td class="bg-blue">{{item.week}}</td>
@@ -191,10 +191,11 @@
                       <span v-else></span>
                     </td>
                   </template>
-                  <template v-if="item.isWork=== '0' && item.intro">
+                  <template v-else-if="item.isWork=== '0' && item.intro">
+                    <!-- {{item}} -->
                     <td class="bg-yellow">{{item.date}}</td>
                     <td class="bg-yellow">{{item.intro}}</td>
-                    <td class="bg-yellow"{{item.intro}}></td>
+                    <td class="bg-yellow">{{item.intro}}</td>
                     <td class="bg-yellow" @click="overtime(index)">
                       <span v-if="item.overtime"> {{item.overtime}} </span>
                       <span v-else></span>
@@ -220,6 +221,7 @@
     </div>
     <script src="2024.js"></script>
     <script>
+      //  console.log(yearJson)
       var app = new Vue({
         el: "#app",
         data() {
